@@ -1,8 +1,9 @@
-# FSIQ Stability
+# FSIQ Stability Simulation
 
 This repository includes a simulation of data using the known psychometric relationships between the WISC-V and WAIS-IV. All outcomes rely on simulated scores, known correlations between tests, and known SEM for each score.
 
 An example of this is the stability of FSIQ after accounting for test-retest reliability, WISC-V FSIQ SEM, WISC-V/WAIS-IV correlations and WAIS-IV SEM.
+
 ![FSIQ Bias Plot](https://github.com/jakekraska/iqstability/blob/master/fsiqbias.png?raw=true)
 
 ## Authors and Contributions
