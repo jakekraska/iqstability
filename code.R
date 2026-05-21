@@ -32,7 +32,7 @@ wisc.sem <- c("Verbal Comprehension" = 4.22, # average sem for VCI
          "Processing Speed" = 5.24, # average sem for PSI
          "Full Scale IQ" = 2.90) # average sem for FSIQ
 
-wisc.sem <- 1 - (wisc.sem/15)^2 # convert SEM to reliability: rxx = 1 - (SEM/SD)^2
+wisc.reliability <- 1 - (wisc.sem/15)^2 # convert SEM to reliability: rxx = 1 - (SEM/SD)^2
 
 # WISC-V and WAIS-IV correlations
 # This uses the "Corrected R" from Table 5.8 of the WISC-V A&NZ Technical Manual
@@ -57,7 +57,7 @@ wais.sem <- c("Verbal Comprehension" = 2.85, # average sem for WAIS-IV VCI
               "Processing Speed" = 4.78, # average sem for WAIS-IV PSI
               "Full Scale IQ" = 2.16) # average sem for WAIS-IV FSIQ
 
-wais.sem <- 1 - (wais.sem/15)^2 # convert SEM to reliability: rxx = 1 - (SEM/SD)^2
+wais.reliability <- 1 - (wais.sem/15)^2 # convert SEM to reliability: rxx = 1 - (SEM/SD)^2
 
 # Test Names
 first.test <- "WISC-V"
@@ -128,7 +128,7 @@ bias.plot <- function(bias, title, subtitle) {
 # partially reflects measurement error — which means this simulation may compound (double-count)
 # some sources of error. Results should be interpreted with this limitation in mind.
 
-for (i in 1:6) {
+for (i in seq_along(correlations)) {
   
   # Simulate test "temporal stability"
   wisc.retest <- simulation(r = stability[i])
@@ -148,7 +148,7 @@ for (i in 1:6) {
   
   # Simulate test "error measurement"
   wisc.error <- simulation(orig.test = wisc.retest$predicted.test, # use the simulated wisc retest scores
-                           r = wisc.sem[i])
+                           r = wisc.reliability[i])
   
   # Print the scatter plot of first simulation
   print(cor.plot(orig.test.scores = wisc.retest$orig.test, 
@@ -182,7 +182,7 @@ for (i in 1:6) {
   
   # Simulate the WAIS-IV SEM
   wais.error <- simulation(orig.test = wais$predicted.test, # use the simulated wisc retest scores
-                     r = wais.sem[i])
+                     r = wais.reliability[i])
   
   # Print the scatter plot of second simulation
   print(cor.plot(orig.test.scores = wisc.retest$orig.test, 
